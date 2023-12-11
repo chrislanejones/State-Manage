@@ -1,80 +1,23 @@
-import { useReducer } from "react";
-
-function UserForm() {
-  const [state, dispatch] = useReducer(
-    (state, action) => ({
-      ...state,
-      ...action,
-    }),
-    {
-      first: "",
-      last: "",
-    }
-  );
-  return (
-    <div>
-      <input
-        type="text"
-        value={state.first}
-        onChange={(e) => dispatch({ first: e.target.value })}
-      />
-      <input
-        type="text"
-        value={state.last}
-        onChange={(e) => dispatch({ last: e.target.value })}
-      />
-      <div>
-        <div>First: {state.first}</div>
-        <div>Last: {state.last}</div>
-      </div>
-    </div>
-  );
-}
-
-function NameList() {
-  const [state, dispatch] = useReducer(
-    (state, action) => {
-      switch (action.type) {
-        case "SET_NAME":
-          return { ...state, name: action.payload };
-        case "ADD_NAME":
-          return {
-            ...state,
-            names: [...state.names, state.name],
-            name: "",
-          };
-      }
-    },
-    {
-      names: [],
-      name: "",
-    }
-  );
-  return (
-    <div className="App">
-      <div>
-        {state.names.map((name, index) => (
-          <div key={index}>{name}</div>
-        ))}
-      </div>
-      <input
-        type="text"
-        value={state.name}
-        onChange={(e) =>
-          dispatch({ type: "SET_NAME", payload: e.target.value })
-        }
-      />
-      <button onClick={() => dispatch({ type: "ADD_NAME" })}>Add Name</button>
-    </div>
-  );
-}
+import { useState, useMemo } from "react";
 
 function App() {
+  const [numbers] = useState([10, 20, 30]);
+
+  const total = useMemo(
+    () => numbers.reduce((acc, number) => acc + number, 0),
+    [numbers]
+  );
+
+  const [names] = useState(["John", "Paul", "George", "Ringo"]);
+
+  const sortedNames = useMemo(() => [...names].sort(), [names]);
+
   return (
-    <div>
-      <NameList />
-      <UserForm />
-    </div>
+    <>
+      <div>Total: {total}</div>
+      <div>Names: {names.join(", ")}</div>
+      <div>Name: {sortedNames.join(", ")}</div>
+    </>
   );
 }
 
