@@ -9,16 +9,17 @@ function App() {
     inputRef.current.focus();
   }, []);
 
+  const idRef = useRef(1);
   const [names, SetNames] = useState([
-    { id: 1, name: "John" },
-    { id: 2, name: "Jane" },
+    { id: idRef.current++, name: "John" },
+    { id: idRef.current++, name: "Jane" },
   ]);
 
   const onAddName = () => {
     SetNames([
       ...names,
       {
-        id: 10,
+        id: idRef.current++,
         name: inputRef.current.value,
       },
     ]);
@@ -29,7 +30,9 @@ function App() {
     <div>
       <div>
         {names.map((firstName) => (
-          <div key={firstName.name}>{firstName.name}</div>
+          <div key={firstName.name}>
+            {firstName.id} - {firstName.name}
+          </div>
         ))}
       </div>
       <input type="text" ref={inputRef} />
