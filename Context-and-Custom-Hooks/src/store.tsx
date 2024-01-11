@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from "react";
 
 interface Pokemon {
   id: number;
@@ -15,6 +22,7 @@ interface Pokemon {
 function usePokemonSource(): {
   pokemon: Pokemon[];
   search: string;
+  setSearch: (search: string) => void;
 } {
   // const [pokemon, setPokemon] = useState<Pokemon[]>([]);
   // const [search, setSearch] = useState("");
@@ -22,12 +30,16 @@ function usePokemonSource(): {
     pokemon: Pokemon[];
     search: string;
   };
-  type PokemonAction = { type: "setPokemon"; payload: Pokemon[] };
+  type PokemonAction =
+    | { type: "setPokemon"; payload: Pokemon[] }
+    | { type: "setSearch"; payload: string };
   const [{ pokemon, search }, dispatch] = useReducer(
     (state: PokemonState, action: PokemonAction) => {
       switch (action.type) {
         case "setPokemon":
           return { ...state, pokemon: action.payload };
+        case "setSearch":
+          return { ...state, search: action.payload };
       }
     },
     {
@@ -46,7 +58,20 @@ function usePokemonSource(): {
         })
       );
   }, []);
-  return { pokemon, search };
+
+  const setSearch = useCallback((search: string) => {
+    dispatch({
+      type: "setSearch",
+      payload: search,
+    });
+  }, []);
+
+  const filteredPokemon = useMemo(
+    () => pokemon.filter((p) => p.name.includes(search)),
+    [pokemon, search]
+  );
+
+  return { pokemon: filteredPokemon, search, setSearch };
 }
 
 const PokemonContext = createContext<ReturnType<typeof usePokemonSource>>(
