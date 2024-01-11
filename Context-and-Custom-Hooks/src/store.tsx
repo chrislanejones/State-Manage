@@ -12,7 +12,7 @@ interface Pokemon {
   speed: number;
 }
 
-export function usePokemonSource(): {
+function usePokemonSource(): {
   pokemon: Pokemon[];
 } {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -25,10 +25,18 @@ export function usePokemonSource(): {
   return { pokemon };
 }
 
-export const PokemonContext = createContext<
-  ReturnType<typeof usePokemonSource>
->({} as unknown as ReturnType<typeof usePokemonSource>);
+const PokemonContext = createContext<ReturnType<typeof usePokemonSource>>(
+  {} as unknown as ReturnType<typeof usePokemonSource>
+);
 
 export function usePokemon() {
   return useContext(PokemonContext)!;
+}
+
+export function PokemonProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <PokemonContext.Provider value={usePokemonSource()}>
+      {children}
+    </PokemonContext.Provider>
+  );
 }
