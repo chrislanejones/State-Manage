@@ -14,7 +14,9 @@ const PokemonList = () => {
 function App() {
   return (
     <PokemonProvider>
-      <PokemonList />;
+      <div className="mx-auto max-w-3xl">
+        <PokemonList />
+      </div>
     </PokemonProvider>
   );
 }
