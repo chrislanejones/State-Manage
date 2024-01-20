@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@tanstack/react-query": "^5.17.15",
+    "vite": "^5.0.12"
+  }
+}
