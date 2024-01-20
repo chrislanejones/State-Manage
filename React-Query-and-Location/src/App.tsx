@@ -1,4 +1,8 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import { PokemonProvider, usePokemon } from "./store";
+
+const queryClient = new QueryClient();
 
 function SearchBox() {
   const { search, setSearch } = usePokemon();
@@ -37,12 +41,14 @@ const PokemonList = () => {
 
 function App() {
   return (
-    <PokemonProvider>
-      <div className="mx-auto max-w-3xl">
-        <SearchBox />
-        <PokemonList />
-      </div>
-    </PokemonProvider>
+    <QueryClientProvider client={queryClient}>
+      <PokemonProvider>
+        <div className="mx-auto max-w-3xl">
+          <SearchBox />
+          <PokemonList />
+        </div>
+      </PokemonProvider>
+    </QueryClientProvider>
   );
 }
 

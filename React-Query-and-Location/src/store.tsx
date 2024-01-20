@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import {
   createContext,
   useCallback,
@@ -24,8 +25,6 @@ function usePokemonSource(): {
   search: string;
   setSearch: (search: string) => void;
 } {
-  // const [pokemon, setPokemon] = useState<Pokemon[]>([]);
-  // const [search, setSearch] = useState("");
   type PokemonState = {
     pokemon: Pokemon[];
     search: string;
