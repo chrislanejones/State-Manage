@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 
 export interface Pokemon {
   id: number;
@@ -25,3 +25,9 @@ export const usePokemon = create<{
   search: "",
   setSearch: (search) => set({ search }),
 }));
+
+fetch("/pokemon.json")
+  .then((response) => response.json())
+  .then((pokemon) => {
+    usePokemon.getState().setAllPokemon(pokemon);
+  });
