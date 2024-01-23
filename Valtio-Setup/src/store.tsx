@@ -1,3 +1,4 @@
+import { proxy } from "valtio";
 export interface Pokemon {
   id: number;
   name: string;
@@ -9,3 +10,17 @@ export interface Pokemon {
   special_defense: number;
   speed: number;
 }
+
+export const search = proxy({
+  query: "",
+});
+
+export const allPokemon = proxy({
+  pokemon: [] as Pokemon[],
+});
+
+fetch("/pokemon.json")
+  .then((res) => res.json())
+  .then((pokemon) => {
+    allPokemon.pokemon = pokemon;
+  });
