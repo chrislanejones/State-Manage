@@ -1,3 +1,5 @@
+import create from "zustand";
+
 export interface Pokemon {
   id: number;
   name: string;
@@ -9,3 +11,14 @@ export interface Pokemon {
   special_defense: number;
   speed: number;
 }
+
+export const usePokemon = create<{
+  pokemon: Pokemon[];
+  allPokemon: Pokemon[];
+  setPokemon: (pokemon: Pokemon[]) => void;
+  setSearch: (search: string) => void;
+}>((set) => ({
+  pokemon: [],
+  allPokemon: [],
+  setAllPokemon: (pokemon) => set({ allPokemon: pokemon }),
+}));
