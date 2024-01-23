@@ -12,18 +12,29 @@ export interface Pokemon {
   speed: number;
 }
 
+const searchAndSortPokemon = (pokemon: Pokemon[], search: string) =>
+  pokemon
+    .filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))
+    .slice(0, 10)
+    .sort((a, b) => a.name.localeCompare(b.name));
+
 export const usePokemon = create<{
   pokemon: Pokemon[];
   allPokemon: Pokemon[];
-  setPokemon: (pokemon: Pokemon[]) => void;
+  setAllPokemon: (pokemon: Pokemon[]) => void;
   search: string;
   setSearch: (search: string) => void;
-}>((set) => ({
+}>((set, get) => ({
   pokemon: [],
   allPokemon: [],
-  setAllPokemon: (pokemon) => set({ allPokemon: pokemon, pokemon }),
+  setAllPokemon: (pokemon) =>
+    set({
+      allPokemon: pokemon,
+      pokemon: searchAndSortPokemon(pokemon, get().search),
+    }),
   search: "",
-  setSearch: (search) => set({ search }),
+  setSearch: (search) =>
+    set({ search, pokemon: searchAndSortPokemon(get().allPokemon, search) }),
 }));
 
 fetch("/pokemon.json")
