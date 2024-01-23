@@ -16,9 +16,12 @@ export const usePokemon = create<{
   pokemon: Pokemon[];
   allPokemon: Pokemon[];
   setPokemon: (pokemon: Pokemon[]) => void;
+  search: string;
   setSearch: (search: string) => void;
 }>((set) => ({
   pokemon: [],
   allPokemon: [],
-  setAllPokemon: (pokemon) => set({ allPokemon: pokemon }),
+  setAllPokemon: (pokemon) => set({ allPokemon: pokemon, pokemon }),
+  search: "",
+  setSearch: (search) => set({ search }),
 }));
