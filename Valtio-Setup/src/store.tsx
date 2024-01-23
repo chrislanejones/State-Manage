@@ -1,4 +1,5 @@
 import { proxy } from "valtio";
+import { derive } from "valtio/utils";
 export interface Pokemon {
   id: number;
   name: string;
@@ -15,8 +16,17 @@ export const search = proxy({
   query: "",
 });
 
-export const allPokemon = proxy({
+const allPokemon = proxy({
   pokemon: [] as Pokemon[],
+});
+
+export const pokemon = derive({
+  list: (get) => {
+    const query = get(search).query.toLowerCase();
+    return get(allPokemon).pokemon.filter((p) =>
+      p.name.toLowerCase().includes(query)
+    );
+  },
 });
 
 fetch("/pokemon.json")

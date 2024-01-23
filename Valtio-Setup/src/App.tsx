@@ -1,6 +1,6 @@
 import { useSnapshot } from "valtio";
 
-import { search, allPokemon } from "./store";
+import { search, pokemon } from "./store";
 
 function SearchBox() {
   const snap = useSnapshot(search);
@@ -17,9 +17,10 @@ function SearchBox() {
 }
 
 const PokemonList = () => {
+  const snap = useSnapshot(pokemon);
   return (
     <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-3">
-      {[].map((p) => (
+      {snap.list.map((p) => (
         <li
           key={p.id}
           className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"
