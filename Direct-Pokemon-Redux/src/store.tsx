@@ -19,12 +19,10 @@ export interface Pokemon {
 const searchSlice = createSlice({
   name: "search",
   initialState: {
-    search: "",
+    search: "foo",
   },
   reducers: {
-    setSearch: (state, action: PayloadAction<string>) => {
-      state.search = action.payload;
-    },
+    setSearch: (state, action: PayloadAction<string>) => {},
   },
 });
 
@@ -33,6 +31,9 @@ export const { setSearch } = searchSlice.actions;
 export const store = configureStore({
   reducer: {
     search: searchSlice.reducer,
-    pokemonApi: pokemonApi.reducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export const selectSearch = (state: RootState) => state.search.search;
