@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { atomWithQuery } from "jotai-tanstack-query";
+import { atomsWithQuery } from "jotai-tanstack-query";
 
 export interface Pokemon {
   id: number;
