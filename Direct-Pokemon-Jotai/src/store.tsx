@@ -25,3 +25,8 @@ export const pokemonAtom = atom((get) => {
   const all = get(allPokemon);
   return all.filter((p) => p.name.toLowerCase().includes(search));
 });
+
+export const sortedPokemonAtom = atom((get) => {
+  const pokemon = get(pokemonAtom);
+  return pokemon.slice(0, 10).sort((a, b) => a.name.localeCompare(b.name));
+});
