@@ -15,3 +15,24 @@ export interface Pokemon {
   special_defense: number;
   speed: number;
 }
+
+const searchSlice = createSlice({
+  name: "search",
+  initialState: {
+    search: "",
+  },
+  reducers: {
+    setSearch: (state, action: PayloadAction<string>) => {
+      state.search = action.payload;
+    },
+  },
+});
+
+export const { setSearch } = searchSlice.actions;
+
+export const store = configureStore({
+  reducer: {
+    search: searchSlice.reducer,
+    pokemonApi: pokemonApi.reducer,
+  },
+});
