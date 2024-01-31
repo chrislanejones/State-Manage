@@ -19,3 +19,9 @@ export const [allPokemon] = atomsWithQuery<Pokemon[]>(() => ({
   queryKey: ["pokemon"],
   queryFn: () => fetch("/pokemon.json").then((res) => res.json()),
 }));
+
+export const pokemonAtom = atom((get) => {
+  const search = get(searchAtom).toLowerCase();
+  const all = get(allPokemon);
+  return all.filter((p) => p.name.toLowerCase().includes(search));
+});

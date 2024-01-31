@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue } from "jotai";
 
-import { searchAtom, allPokemon } from "./store";
+import { searchAtom, pokemonAtom } from "./store";
 
 function SearchBox() {
   const [search, setSearch] = useAtom(searchAtom);
@@ -17,7 +17,7 @@ function SearchBox() {
 }
 
 const PokemonList = () => {
-  const pokemon = useAtomValue(allPokemon);
+  const pokemon = useAtomValue(pokemonAtom);
   return (
     <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-3">
       {pokemon.map((p) => (
